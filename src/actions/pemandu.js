@@ -7,9 +7,9 @@ import {
 
 import PemanduDataService from "../services/pemandu.service";
 
-export const createPemandu = (namaPemandu, username, email, password, deskripsi, rating) => async (dispatch) => {
+export const createPemandu = (nama, username, email, password, desc, rating) => async (dispatch) => {
     try {
-        const res = await PemanduDataService.create({ namaPemandu, username, email, password, deskripsi, rating });
+        const res = await PemanduDataService.createPemandu({ nama, username, email, password, desc, rating });
 
         dispatch({
             type: CREATE_PEMANDU,

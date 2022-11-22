@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailhotel.module.css'
+import { useParams, useNavigate } from 'react-router-dom';
+import { deleteHotel, getHotelDetail } from '../actions/hotelAction';
+import { useDispatch, useSelector } from "react-redux";
 
+const DetailHotel = () => {
 
-const detailHotel = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { getHotelDetailResult } = useSelector((state) => state.hotelReducer);
+
+    useEffect(() => {
+        dispatch(getHotelDetail(id))
+    }, [dispatch])
+
     return (
         <div className={styles.container}>
             <div className={styles.header1}>
@@ -13,42 +26,46 @@ const detailHotel = () => {
             <Form>
                 <Form.Group className="mb-3" >
                     <Form.Label>Nama Hotel</Form.Label>
-                    <Form.Control type="text" value="Amnaya Resto Kuta" className={styles.bodyInput} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+                    {getHotelDetailResult ?
+                        (<Form.Control type="text" value={getHotelDetailResult.namaHotel} className={styles.bodyInput} />)
+                        : (<Form.Control type="text" value="-" className={styles.bodyInput} />)}
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
                     <Form.Label>Alamat</Form.Label>
-                    <Form.Control type="text" value="Kuta, Bali" className={styles.bodyInput} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+                    {getHotelDetailResult ?
+                        (<Form.Control type="text" value={getHotelDetailResult.alamat} className={styles.bodyInput} />)
+                        : (<Form.Control type="text" value="-" className={styles.bodyInput} />)}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Fasilitas WIFI</Form.Label>
-                    <Form.Control type="text" value="Free" className={styles.bodyInput} />
+                    {/* {getHotelDetailResult ?
+                        ({
+                            getHotelDetailResult.fasWifi !== "0" ?
+                                (<Form.Control type="text" value="Tersedia" className={styles.bodyInput} />) : (<Form.Control type="text" value="Tidak Tersedia" className={styles.bodyInput} />)
+                        })
+                        : (<Form.Control type="text" value="-" className={styles.bodyInput} />)} */}
+                    <Form.Control type="text" value="Tersedia" className={styles.bodyInput} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Fasilitas Parkir</Form.Label>
-                    <Form.Control type="text" value="Luas" className={styles.bodyInput} />
+                    <Form.Control type="text" value="Tersedia" className={styles.bodyInput} />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Fasilitas Sarapan</Form.Label>
-                    <Form.Control type="text" value="Pagi dan Malem" className={styles.bodyInput} />
+                    <Form.Control type="text" value="Tersedia" className={styles.bodyInput} />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Rating</Form.Label>
-                    <Form.Control type="text" value="4" className={styles.bodyInput} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+                    {getHotelDetailResult ?
+                        (<Form.Control type="text" value={getHotelDetailResult.rating} className={styles.bodyInput} />)
+                        : (<Form.Control type="text" value="-" className={styles.bodyInput} />)}
+
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Ubah
@@ -58,4 +75,4 @@ const detailHotel = () => {
     )
 }
 
-export default detailHotel;
+export default DetailHotel;

@@ -24,9 +24,9 @@ const kulinerReducer = (state = initialState, action) => {
         case GET_KULINER_DETAIL:
             return {
                 ...state,
-                getKulinerListResult: action.payload.data,
-                getKulinerLoading: action.payload.loading,
-                getKulinerError: action.payload.errorMessage
+                getKulinerDetailResult: action.payload.data,
+                getKulinerDetailLoading: action.payload.loading,
+                getKulinerDetailError: action.payload.errorMessage
             }
         default:
             return state;

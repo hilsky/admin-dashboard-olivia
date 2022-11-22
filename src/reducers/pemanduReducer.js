@@ -1,7 +1,7 @@
 import {
     GET_PEMANDU_DETAIL,
     GET_PEMANDU_LIST,
-
+    DELETE_PEMANDU
 } from "../actions/pemanduAction";
 
 let initialState = {
@@ -28,9 +28,9 @@ const pemanduReducer = (state = initialState, action) => {
         case GET_PEMANDU_DETAIL:
             return {
                 ...state,
-                getPemanduListResult: action.payload.data,
-                getPemanduLoading: action.payload.loading,
-                getPemanduError: action.payload.errorMessage
+                getPemanduDetailResult: action.payload.data,
+                getPemanduDetailError: action.payload.loading,
+                getPemanduDetailLoading: action.payload.errorMessage
             }
         default:
             return state;

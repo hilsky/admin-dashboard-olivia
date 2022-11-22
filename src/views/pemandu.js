@@ -78,7 +78,6 @@ const Pemandu = () => {
 
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-pemandu/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm">Hapus</Button>
                                 </td>
                             </tr>
                         )

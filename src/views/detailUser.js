@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailuser.module.css'
 import { useParams } from 'react-router-dom';
-import { getUserDetail } from '../actions/userAction';
+import { getUserDetail, putUserUpdate } from '../actions/userAction';
 import { updateUser } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
 import UserDataService from '../services/user.service';
 
+
 const DetailUser = () => {
 
     const initialUserState = {
-        id: null,
         fullName: "",
         username: "",
         email: "",
@@ -40,7 +40,7 @@ const DetailUser = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { getUserDetailResult } = useSelector((state) => state.userReducer);
+    const { getUserDetailResult, getResponDataUser, errorResponDataUser } = useSelector((state) => state.userReducer);
 
 
 
@@ -56,6 +56,7 @@ const DetailUser = () => {
     }
 
     useEffect(() => {
+        console.log(id)
         getDetailUserById(id)
     }, [id])
 
@@ -65,9 +66,10 @@ const DetailUser = () => {
     };
 
     const updateData = () => {
-        dispatch(updateUser(currentUser.id, currentUser))
+        dispatch(putUserUpdate(currentUser, currentUser._id))
             .then(response => {
                 console.log(response)
+                window.stop()
             })
             .catch(e => {
                 console.log(e)
@@ -104,46 +106,36 @@ const DetailUser = () => {
         setNoWa(noWa);
     }
 
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        setSuccessful(false);
-        const form = e.currentTarget;
+    // const handleUpdate = (e) => {
+    //     e.preventDefault();
+    //     setSuccessful(false);
+    //     const form = e.currentTarget;
 
-        var regexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
+    //     var regexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    //     if (form.checkValidity() === false) {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //     }
 
-        if (fullName.length === 0 && email.length === 0 && password.length === 0) {
-            setSuccessful(false);
-            setErrorEmail('Wajib diisi');
-            setErrorFullName('Wajib diisi');
-            setErrorPassword('Wajib diisi');
-        }
-        else if (!(email.match(regexp))) {
+    //     if (fullName.length === 0 && email.length === 0 && password.length === 0) {
+    //         setSuccessful(false);
+    //         setErrorEmail('Wajib diisi');
+    //         setErrorFullName('Wajib diisi');
+    //         setErrorPassword('Wajib diisi');
+    //     }
+    //     else {
+    //         dispatch(updateUser(fullName, username, email, password, noWa, alamat))
+    //             .then((response) => {
+    //                 console.log(response)
+    //                 navigate('/')
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err)
+    //             })
+    //     }
 
-        }
-        else {
-            dispatch(updateUser(fullName, username, email, password, noWa, alamat))
-                .then(() => {
-                    setSuccessful(true)
-
-                    setFullName('');
-                    setPassword('');
-                    setEmail('');
-                    setUsername('');
-                    setAlamat('');
-                    setNoWa('');
-                    navigate('/')
-                })
-                .catch((err) => {
-                    setSuccessful(false)
-                })
-        }
-
-        setValidated(true);
-    }
+    //     setValidated(true);
+    // }
 
     return (
         <div className={styles.container}>

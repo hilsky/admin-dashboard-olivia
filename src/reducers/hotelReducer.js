@@ -5,12 +5,12 @@ import {
 } from "../actions/hotelAction";
 
 let initialState = {
-    getKulinerListResult: false,
-    getKulinerLoading: false,
-    getKulinerError: false,
-    getKulinerDetailResult: false,
-    getKulinerDetailError: false,
-    getKulinerDetailLoading: false,
+    getHotelListResult: false,
+    getHotelLoading: false,
+    getHotelError: false,
+    getHotelDetailResult: false,
+    getHotelDetailError: false,
+    getHotelDetailLoading: false,
     deleteHotelResult: false,
     deleteHotelLoading: false,
     deleteHotelError: false,
@@ -28,9 +28,9 @@ const hotelReducer = (state = initialState, action) => {
         case GET_HOTEL_DETAIL:
             return {
                 ...state,
-                getKulinerListResult: action.payload.data,
-                getKulinerLoading: action.payload.loading,
-                getKulinerError: action.payload.errorMessage
+                getHotelDetailResult: action.payload.data,
+                getKulinerDetailLoading: action.payload.loading,
+                getKulinerDetailError: action.payload.errorMessage
             }
         default:
             return state;

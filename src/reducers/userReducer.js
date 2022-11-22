@@ -1,7 +1,8 @@
 import {
     GET_USER_DETAIL,
     GET_USER_LIST,
-    DELETE_USER
+    DELETE_USER,
+    PUT_USER_EDIT
 } from "../actions/userAction";
 
 let initialState = {
@@ -13,7 +14,9 @@ let initialState = {
     getUserDetailLoading: false,
     userDeleteResult: false,
     userDeleteLoading: false,
-    userDeleteError: false
+    userDeleteError: false,
+    getResponDataUser: false,
+    errorResponDataUser: false,
 }
 
 const UserReducer = (state = initialState, action) => {
@@ -32,8 +35,14 @@ const UserReducer = (state = initialState, action) => {
                 getUserDetailError: action.payload.error,
                 getUserDetailLoading: action.payload.loading
             }
+        case PUT_USER_EDIT:
+            return {
+                ...state,
+                getResponDataUser: action.payload.data,
+                errorResponDataUser: action.payload.data
+            }
 
-        // case DELETE_USER:
+        // case DELETE_USER:    
         //     return {
         //         ...state,
         //         userDeleteResult: action.payload.data,

@@ -34,7 +34,7 @@ export const getPemanduList = () => {
 export const getPemanduDetail = (id) => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/hotel/" + id)
+            .get("https://desolate-crag-78080.herokuapp.com/guide/" + id)
             .then((response) => {
                 dispatch({
                     type: GET_PEMANDU_DETAIL,
