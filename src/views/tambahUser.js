@@ -102,7 +102,7 @@ const TambahUser = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder='Masukkan password' className={styles.bodyInput} value={password} onChange={onChangePassword} />
+                    <Form.Control type="password" placeholder='Masukkan password' className={styles.bodyInput} value={password} onChange={onChangePassword} />
                 </Form.Group>
                 {/* <Form.Group className="mb-3" controlId="formBasicHari">
                     <Form.Label>Nomor Whatsapp</Form.Label>
