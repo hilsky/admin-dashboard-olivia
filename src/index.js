@@ -9,13 +9,19 @@ import logger from 'redux-logger';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProSidebarProvider } from 'react-pro-sidebar';
+import reducers from './reducers';
+
+
+const store = createStore(reducers, compose(applyMiddleware(thunk, logger)))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ProSidebarProvider>
-      <App />
-    </ProSidebarProvider>
+    <Provider store={store}>
+      <ProSidebarProvider>
+        <App />
+      </ProSidebarProvider>
+    </Provider>
   </React.StrictMode>
 );
 

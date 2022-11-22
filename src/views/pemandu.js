@@ -4,55 +4,44 @@ import styles from '../styles/user.module.css';
 import HiOutlinePencilSquare from 'react-icons/hi2'
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getUser,
-    getUserById,
+import { getPemanduList, deletePemandu } from "../actions/pemanduAction";
 
-} from "../actions/user"
 
-import { getUserList, deleteUser } from "../actions/userAction";
-
-const DashboardUser = () => {
-
-    const [currentUser, setCurrentUSer] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
+const Pemandu = () => {
 
     const dispatch = useDispatch();
 
-
-    const { getUserListResult, getUserLoading, getUserError, userDeleteResult } =
-        useSelector((state) => state.userReducer);
+    const { getPemanduListResult, getPemanduLoading, getPemanduError } =
+        useSelector((state) => state.pemanduReducer);
 
     useEffect(() => {
-        dispatch(getUserList());
+        dispatch(getPemanduList());
     }, [dispatch])
 
+    let navigate = useNavigate();
+    const tambahPemandu = () => {
+        let path = '/tambah-pemandu'
+        navigate(path)
+    }
 
     const deleteById = (id) => {
-        dispatch(deleteUser(id))
+        dispatch(deletePemandu(id))
             .then((res) => {
                 console.log(res)
             })
             .catch((err) => {
                 console.log(err)
             })
-        navigate('/')
+        navigate('/pemandu')
     }
-
-    let navigate = useNavigate();
-    const tambahUser = () => {
-        let path = '/tambah-user'
-        navigate(path)
-    }
-
 
     return (
         <div className={styles.container}>
             <div className={styles.header1}>
-                <h1 className={styles.headerText}>Users</h1>
+                <h1 className={styles.headerText}>Pemandu</h1>
             </div>
             <div className={styles.headerBody2}>
-                <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahUser}>
+                <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahPemandu}>
                     Tambah
                 </Button>
                 <Button variant="primary" size="sm" active className={styles.btnExport}>
@@ -66,38 +55,38 @@ const DashboardUser = () => {
                 <thead className={styles.tableBody}>
                     <tr>
                         <th>No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Pemandu</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Password</th>
-                        <th>Nomor Whatsapp</th>
-                        <th>Alamat</th>
+                        <th>Deskripsi</th>
+                        <th>Rating</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody className={styles.tBody}>
-                    {getUserListResult ? (getUserListResult.map((e, index) => {
+                    {getPemanduListResult ? (getPemanduListResult.map((e, index) => {
                         return (
                             <tr key={e._id}>
                                 <td>{index + 1}</td>
-                                <td>{e.fullName}</td>
+                                <td>{e.nama ? (e.nama) : "-"}</td>
                                 <td>{e.username ? (e.username) : "-"}</td>
-                                <td>{e.email}</td>
-                                <td>{e.password}</td>
-                                <td>{e.noWa ? (e.noWa) : "-"}</td>
-                                <td>{e.alamat ? (e.alamat) : "-"}</td>
+                                <td>{e.email ? (e.email) : "-"}</td>
+                                <td>{e.password ? (e.password) : "-"}</td>
+                                <td>{e.desc ? (e.desc) : "-"}</td>
+                                <td>{e.rating ? (e.rating) : "-"}</td>
+
                                 <td className={styles.tdBtn}>
-                                    <Button variant="success" size="sm"><Link to={"/detail-user/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={() => deleteById(e._id)}>Hapus</Button>
+                                    <Button variant="success" size="sm"><Link to={"/detail-pemandu/" + e._id}>Edit</Link></Button>
+                                    <Button variant="danger" size="sm">Hapus</Button>
                                 </td>
                             </tr>
                         )
                     })) : <div>Data Tidak Tersedia</div>}
-
                 </tbody>
             </Table>
         </div>
     )
 }
 
-export default DashboardUser;
+export default Pemandu;
