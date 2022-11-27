@@ -24,10 +24,11 @@ const Hotel = () => {
         navigate(path)
     }
 
-    const deleteById = (e) => {
+    const deleteById = (id, e) => {
         e.preventDefault();
         console.log(e)
-        dispatch(deleteHotel(e._id))
+        dispatch(deleteHotel(id))
+        window.location.reload();
     }
 
 
@@ -73,7 +74,7 @@ const Hotel = () => {
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={deleteById}>Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
                                 </td>
                             </tr>
                         )
