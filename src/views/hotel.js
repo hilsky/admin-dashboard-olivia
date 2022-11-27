@@ -24,9 +24,10 @@ const Hotel = () => {
         navigate(path)
     }
 
-    const deleteById = (id) => {
-        dispatch(deleteHotel(id))
-        navigate('/wisata')
+    const deleteById = (e) => {
+        e.preventDefault();
+        console.log(e)
+        dispatch(deleteHotel(e._id))
     }
 
 
@@ -72,7 +73,7 @@ const Hotel = () => {
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" >Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={deleteById}>Hapus</Button>
                                 </td>
                             </tr>
                         )
