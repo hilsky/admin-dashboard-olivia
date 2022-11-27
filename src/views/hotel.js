@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import axios from 'axios';
 import { Table, Button } from 'react-bootstrap';
 import styles from '../styles/user.module.css';
 import HiOutlinePencilSquare from 'react-icons/hi2'
@@ -32,6 +33,16 @@ const Hotel = () => {
                 console.log(err)
             })
         navigate('/wisata')
+    }
+
+    const deleteHotel = (id) => {
+        axios.delete('https://desolate-crag-78080.herokuapp.com/' + id)
+            .then((res) => {
+                console.log('Data berhasil dihapus')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
@@ -76,7 +87,7 @@ const Hotel = () => {
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm">Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={deleteById(e._id)}>Hapus</Button>
                                 </td>
                             </tr>
                         )
