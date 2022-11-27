@@ -47,8 +47,12 @@ const DetailUser = () => {
     const getDetailUserById = id => {
         UserDataService.getById(id)
             .then(response => {
-                setCurrentUser(response.data)
-                console.log(response.data);
+                setFullName(response.data.fullName)
+                setUsername(response.data.username)
+                setEmail(response.data.email)
+                setPassword(response.data.password)
+                setNoWa(response.data.noWa)
+                setAlamat(response.data.alamat)
             })
             .catch(e => {
                 console.log(e);
@@ -65,39 +69,43 @@ const DetailUser = () => {
         setCurrentUser({ ...currentUser, [name]: value });
     };
 
-    const updateData = (e) => {
-        e.preventDefault()
-        console.log(e)
-        dispatch(putUserUpdate(currentUser, currentUser._id))
+    const updateData = () => {
+        dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat }, id))
         console.log(currentUser)
     }
 
     const onChangeFullName = (e) => {
+        e.preventDefault()
         const fullName = e.target.value;
         setFullName(fullName);
     }
 
     const onChangeEmail = (e) => {
+        e.preventDefault()
         const email = e.target.value;
         setEmail(email);
     }
 
     const onChangePassword = (e) => {
+        e.preventDefault()
         const password = e.target.value;
         setPassword(password);
     }
 
     const onChangeUsername = (e) => {
+        e.preventDefault()
         const username = e.target.value;
-        setAlamat(username);
+        setUsername(username);
     }
 
     const onChangeAlamat = (e) => {
+        e.preventDefault()
         const alamat = e.target.value;
         setAlamat(alamat);
     }
 
     const onChangeNoWa = (e) => {
+        e.preventDefault()
         const noWa = e.target.value;
         setNoWa(noWa);
     }
@@ -142,33 +150,33 @@ const DetailUser = () => {
                 (<Form onSubmit={updateData}>
                     <Form.Group className="mb-3" >
                         <Form.Label>Nama Lengkap</Form.Label>
-                        <Form.Control type="text" value={currentUser.fullName} className={styles.bodyInput} onChange={handleInputChange} />
+                        <Form.Control type="text" value={fullName} className={styles.bodyInput} onChange={onChangeFullName} />
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" value={currentUser.username} className={styles.bodyInput} onChange={handleInputChange} />
+                        <Form.Control type="text" value={username} className={styles.bodyInput} onChange={onChangeUsername} />
 
 
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={currentUser.email} className={styles.bodyInput} onChange={handleInputChange} />
+                        <Form.Control type="email" value={email} className={styles.bodyInput} onChange={onChangeEmail} />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        ? <Form.Control type="password" value={currentUser.password} className={styles.bodyInput} onChange={handleInputChange} />
+                        ? <Form.Control type="password" value={password} className={styles.bodyInput} onChange={onChangePassword} />
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Nomor Whatsapp</Form.Label>
-                        <Form.Control type="number" value={currentUser.noWa} className={styles.bodyInput} onChange={handleInputChange} />
+                        <Form.Control type="number" value={noWa} className={styles.bodyInput} onChange={onChangeNoWa} />
 
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Alamat</Form.Label>
-                        <Form.Control type="text" value={currentUser.alamat} className={styles.bodyInput} onChange={handleInputChange} />
+                        <Form.Control type="text" value={alamat} className={styles.bodyInput} onChange={onChangeAlamat} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
