@@ -16,7 +16,7 @@ const Hotel = () => {
 
     useEffect(() => {
         dispatch(getHotelList());
-    }, [dispatch])
+    }, [])
 
     let navigate = useNavigate();
     const tambahHotel = () => {
@@ -26,12 +26,6 @@ const Hotel = () => {
 
     const deleteById = (id) => {
         dispatch(deleteHotel(id))
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
         navigate('/wisata')
     }
 
@@ -78,7 +72,7 @@ const Hotel = () => {
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={deleteById(e._id)}>Hapus</Button>
+                                    <Button variant="danger" size="sm" >Hapus</Button>
                                 </td>
                             </tr>
                         )

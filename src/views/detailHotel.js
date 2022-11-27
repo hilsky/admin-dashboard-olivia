@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailhotel.module.css'
 import { useParams, useNavigate } from 'react-router-dom';
@@ -16,6 +17,16 @@ const DetailHotel = () => {
     useEffect(() => {
         dispatch(getHotelDetail(id))
     }, [dispatch])
+
+    const deleteHotel = (id) => {
+        axios.delete('https://desolate-crag-78080.herokuapp.com/' + id)
+            .then((res) => {
+                console.log('Data berhasil dihapus')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     return (
         <div className={styles.container}>
@@ -69,6 +80,10 @@ const DetailHotel = () => {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Ubah
+                </Button>
+
+                <Button variant="danger" type="submit" onClick={deleteHotel(id)}>
+                    Hapus
                 </Button>
             </Form>
         </div>
