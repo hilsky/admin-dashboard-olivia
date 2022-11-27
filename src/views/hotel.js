@@ -72,7 +72,7 @@ const Hotel = () => {
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" >Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={deleteById(e._id)}>Hapus</Button>
                                 </td>
                             </tr>
                         )
