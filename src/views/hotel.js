@@ -35,15 +35,6 @@ const Hotel = () => {
         navigate('/wisata')
     }
 
-    const deleteHotel = (id) => {
-        axios.delete('https://desolate-crag-78080.herokuapp.com/' + id)
-            .then((res) => {
-                console.log('Data berhasil dihapus')
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
 
     return (
         <div className={styles.container}>
