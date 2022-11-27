@@ -67,13 +67,7 @@ const DetailUser = () => {
 
     const updateData = () => {
         dispatch(putUserUpdate(currentUser, currentUser._id))
-            .then(response => {
-                console.log(response)
-                window.stop()
-            })
-            .catch(e => {
-                console.log(e)
-            })
+        console.log(currentUser)
     }
 
     const onChangeFullName = (e) => {
