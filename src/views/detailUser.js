@@ -65,7 +65,9 @@ const DetailUser = () => {
         setCurrentUser({ ...currentUser, [name]: value });
     };
 
-    const updateData = () => {
+    const updateData = (e) => {
+        e.preventDefault()
+        console.log(e)
         dispatch(putUserUpdate(currentUser, currentUser._id))
         console.log(currentUser)
     }
