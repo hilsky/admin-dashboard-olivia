@@ -24,15 +24,11 @@ const Pemandu = () => {
         navigate(path)
     }
 
-    const deleteById = (id) => {
+    const deleteById = (id, e) => {
+        e.preventDefault();
+        console.log(e)
         dispatch(deletePemandu(id))
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        navigate('/pemandu')
+
     }
 
     return (
@@ -78,6 +74,7 @@ const Pemandu = () => {
 
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-pemandu/" + e._id}>Edit</Link></Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
                                 </td>
                             </tr>
                         )

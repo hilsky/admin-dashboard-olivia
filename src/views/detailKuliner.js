@@ -17,16 +17,6 @@ const DetailKuliner = () => {
         dispatch(getKulinerDetail(id))
     }, [dispatch])
 
-    // const deletePemanduById = (id) => {
-    //     dispatch(deletePemandu(id))
-    //         .then((res) => {
-    //             console.log(res)
-    //             navigate('/pemandu')
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }
 
     return (
         <div className={styles.container}>

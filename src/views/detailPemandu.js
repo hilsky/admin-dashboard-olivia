@@ -1,12 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailpemandu.module.css'
 import { useParams, useNavigate } from 'react-router-dom';
-import { putUserUpdate, deletePemandu, getPemanduDetail } from '../actions/pemanduAction';
+import { putPemanduUpdate } from '../actions/pemanduAction';
 import { useDispatch, useSelector } from "react-redux";
+import PemanduDataService from '../services/pemandu.service';
 
 
 const DetailPemandu = () => {
+
+    const initialState = {
+        nama: "",
+        username: "",
+        email: "",
+        password: "",
+        desc: "",
+        rating: "",
+    }
+    const [nama, setNama] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [desc, setDesc] = useState('');
+    const [rating, setRating] = useState('');
+    const [currentUser, setCurrentUser] = useState(initialState);
+
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -14,18 +32,67 @@ const DetailPemandu = () => {
     const { getPemanduDetailResult, deletePemanduResult } = useSelector((state) => state.pemanduReducer);
 
     useEffect(() => {
-        dispatch(getPemanduDetail(id))
-    }, [dispatch])
+        console.log(id)
+        getDetailPemanduById(id)
+    }, [id])
 
-    const deletePemanduById = (id) => {
-        dispatch(deletePemandu(id))
-            .then((res) => {
-                console.log(res)
-                navigate('/pemandu')
+    const getDetailPemanduById = id => {
+        PemanduDataService.getById(id)
+            .then(response => {
+                setNama(response.data.nama)
+                setUsername(response.data.username)
+                setEmail(response.data.email)
+                setPassword(response.data.password)
+                setDesc(response.data.desc)
+                setRating(response.data.rating)
+
             })
-            .catch((err) => {
-                console.log(err)
+            .catch(e => {
+                console.log(e);
             })
+    }
+
+    const onChangeNama = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setNama(val)
+    }
+
+    const onChangeUsername = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setUsername(val)
+    }
+
+    const onChangeEmail = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setEmail(val)
+    }
+
+    const onChangePassword = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setPassword(val)
+    }
+
+    const onChangeDesc = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setDesc(val)
+    }
+
+    const onChangeRating = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setRating(val)
+    }
+
+
+    const updateData = () => {
+        dispatch(putPemanduUpdate({ nama, username, email, password, desc, rating }, id))
+        console.log(currentUser)
+        navigate('/pemandu')
     }
 
     return (
@@ -33,66 +100,42 @@ const DetailPemandu = () => {
             <div className={styles.header1}>
                 <h1 className={styles.headerText}>Ubah Pemandu</h1>
             </div>
-
-            <Form>
-                <Form.Group className="mb-3" >
-                    <Form.Label>Nama Lengkap</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="text" value={getPemanduDetailResult.nama} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="text" value="-" className={styles.bodyInput} />
-                    )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Username</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="text" value={getPemanduDetailResult.username} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="text" value="-" className={styles.bodyInput} />
-                    )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Password</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="text" value={getPemanduDetailResult.password} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="text" value="-" className={styles.bodyInput} />
-                    )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="email" value={getPemanduDetailResult.email} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="email" value="-" className={styles.bodyInput} />
-                    )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Deskripsi</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="text" value={getPemanduDetailResult.desc} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="text" value="-" className={styles.bodyInput} />
-                    )}
-
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Rating</Form.Label>
-                    {getPemanduDetailResult ? (
-                        <Form.Control type="text" value={getPemanduDetailResult.rating} className={styles.bodyInput} />
-                    ) : (
-                        <Form.Control type="text" value="-" className={styles.bodyInput} />
-                    )}
-                    {/* <Form.Text className="text-muted">
+            {currentUser ?
+                (<Form onSubmit={updateData}>
+                    <Form.Group className="mb-3" >
+                        <Form.Label>Nama Lengkap</Form.Label>
+                        <Form.Control type="text" value={nama} className={styles.bodyInput} onChange={onChangeNama} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control type="text" value={username} className={styles.bodyInput} onChange={onChangeUsername} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="text" value={password} className={styles.bodyInput} onChange={onChangePassword} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" value={email} className={styles.bodyInput} onChange={onChangeEmail} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Deskripsi</Form.Label>
+                        <Form.Control type="text" value={desc} className={styles.bodyInput} onChange={onChangeDesc} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control type="text" value={rating} className={styles.bodyInput} onChange={onChangeRating} />
+                        {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
-                </Form.Group>
+                    </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    Ubah
-                </Button>
-                <Button variant="danger" size="sm" >Hapus</Button>
-            </Form>
+                    <Button variant="primary" type="submit">
+                        Ubah
+                    </Button>
+
+                </Form>)
+                : <div>Tidak ada Data</div>}
         </div>
     )
 }

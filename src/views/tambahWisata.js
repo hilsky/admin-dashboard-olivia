@@ -18,21 +18,25 @@ const TambahWisata = () => {
     const navigate = useNavigate();
 
     const onChangeNamaWisata = (e) => {
+        e.preventDefault();
         const namaWisata = e.target.value;
         setNamaWisata(namaWisata);
     }
 
     const onChangeAlamat = (e) => {
+        e.preventDefault();
         const alamat = e.target.value;
         setLokasi(alamat);
     }
 
     const onChangeDeskripsi = (e) => {
+        e.preventDefault();
         const deskripsi = e.target.value;
         setDesc(deskripsi);
     }
 
     const onChangeRating = (e) => {
+        e.preventDefault();
         const rating = e.target.value;
         setRating(rating);
     }

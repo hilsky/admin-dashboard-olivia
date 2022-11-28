@@ -23,15 +23,11 @@ const Kuliner = () => {
         navigate(path)
     }
 
-    const deleteKulinerById = (id) => {
+    const deleteById = (id, e) => {
+        e.preventDefault();
+        console.log(e)
         dispatch(deleteKuliner(id))
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        navigate('/wisata')
+
     }
 
 
@@ -74,7 +70,7 @@ const Kuliner = () => {
 
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-kuliner/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" >Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
                                 </td>
                             </tr>
                         )

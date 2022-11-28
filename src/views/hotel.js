@@ -28,7 +28,7 @@ const Hotel = () => {
         e.preventDefault();
         console.log(e)
         dispatch(deleteHotel(id))
-        window.location.reload();
+
     }
 
 

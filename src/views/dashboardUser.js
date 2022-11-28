@@ -25,20 +25,15 @@ const DashboardUser = () => {
 
     useEffect(() => {
         dispatch(getUserList());
-    }, [dispatch])
+    }, [])
 
 
-    const deleteById = (id) => {
+    const deleteById = (id, e) => {
+        e.preventDefault();
+        console.log(e)
         dispatch(deleteUser(id))
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        navigate('/')
-    }
 
+    }
     let navigate = useNavigate();
     const tambahUser = () => {
         let path = '/tambah-user'
@@ -88,7 +83,7 @@ const DashboardUser = () => {
                                 <td>{e.alamat ? (e.alamat) : "-"}</td>
                                 <td className={styles.tdBtn}>
                                     <Button variant="success" size="sm"><Link to={"/detail-user/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={() => deleteById(e._id)}>Hapus</Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
                                 </td>
                             </tr>
                         )

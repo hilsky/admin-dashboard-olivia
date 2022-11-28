@@ -1,7 +1,8 @@
 import {
     GET_PEMANDU_DETAIL,
     GET_PEMANDU_LIST,
-    DELETE_PEMANDU
+    DELETE_PEMANDU,
+    PUT_PEMANDU_EDIT
 } from "../actions/pemanduAction";
 
 let initialState = {
@@ -14,6 +15,8 @@ let initialState = {
     deletePemanduResult: false,
     deletePemanduLoading: false,
     deletePemanduError: false,
+    getResponDataPemandu: false,
+    errorResponDataPemandu: false,
 }
 
 const pemanduReducer = (state = initialState, action) => {
@@ -31,6 +34,12 @@ const pemanduReducer = (state = initialState, action) => {
                 getPemanduDetailResult: action.payload.data,
                 getPemanduDetailError: action.payload.loading,
                 getPemanduDetailLoading: action.payload.errorMessage
+            }
+        case PUT_PEMANDU_EDIT:
+            return {
+                ...state,
+                getResponDataPemandu: action.payload.data,
+                errorResponDataPemandu: action.payload.data
             }
         default:
             return state;

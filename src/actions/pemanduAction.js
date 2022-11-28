@@ -3,6 +3,7 @@ import axios from "axios";
 export const GET_PEMANDU_LIST = "GET_PEMANDU_LIST";
 export const GET_PEMANDU_DETAIL = "GET_PEMANDU_DETAIL";
 export const DELETE_PEMANDU = "DELETE_PEMANDU";
+export const PUT_PEMANDU_EDIT = "PUT_PEMANDU_EDIT"
 
 export const getPemanduList = () => {
     return (dispatch) => {
@@ -67,6 +68,33 @@ export const deletePemandu = (id) => {
             })
             .catch((error) => {
                 console.log(error)
+            })
+    }
+}
+
+export const putPemanduUpdate = (data, id) => {
+    return (dispatch) => {
+        axios
+            .put("https://desolate-crag-78080.herokuapp.com/guide/" + id, data)
+            .then((response) => {
+                dispatch({
+                    type: PUT_PEMANDU_EDIT,
+                    payload: {
+                        loading: true,
+                        data: response.data,
+                        errorMessage: false
+                    },
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    type: PUT_PEMANDU_EDIT,
+                    payload: {
+                        loading: false,
+                        data: false,
+                        errorMessage: true
+                    },
+                });
             })
     }
 }

@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailuser.module.css'
 import { useParams } from 'react-router-dom';
-import { getUserDetail, putUserUpdate } from '../actions/userAction';
-import { updateUser } from '../actions/user';
+import { putUserUpdate } from '../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import UserDataService from '../services/user.service';
 
@@ -40,7 +39,6 @@ const DetailUser = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { getUserDetailResult, getResponDataUser, errorResponDataUser } = useSelector((state) => state.userReducer);
 
 
 
@@ -64,20 +62,19 @@ const DetailUser = () => {
         getDetailUserById(id)
     }, [id])
 
-    const handleInputChange = event => {
-        const { name, value } = event.target;
-        setCurrentUser({ ...currentUser, [name]: value });
-    };
+
 
     const updateData = () => {
         dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat }, id))
         console.log(currentUser)
+        navigate('/')
     }
 
     const onChangeFullName = (e) => {
         e.preventDefault()
         const fullName = e.target.value;
         setFullName(fullName);
+
     }
 
     const onChangeEmail = (e) => {

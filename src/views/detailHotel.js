@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import styles from '../styles/detailhotel.module.css'
 import { useParams, useNavigate } from 'react-router-dom';
 import { deleteHotel, getHotelDetail } from '../actions/hotelAction';
 import { useDispatch, useSelector } from "react-redux";
+import HotelDataService from '../services/hotel.service';
 
 const DetailHotel = () => {
+
+    const [namaHotel, setNamaHotel] = useState('');
+    const [alamat, setAlamat] = useState('');
+    const [fasWifi, setFasWifi] = useState('');
+    const [fasParkir, setFasParkir] = useState('');
+    const [fasSarapan, setFasSarapan] = useState('');
+    const [rating, setRating] = useState('');
+    const [currentHotel, setCurrentHotel] = useState();
 
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -18,15 +27,7 @@ const DetailHotel = () => {
         dispatch(getHotelDetail(id))
     }, [dispatch])
 
-    const deleteHotel = (id) => {
-        axios.delete('https://desolate-crag-78080.herokuapp.com/' + id)
-            .then((res) => {
-                console.log('Data berhasil dihapus')
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
+
 
     return (
         <div className={styles.container}>

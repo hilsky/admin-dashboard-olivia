@@ -1,6 +1,7 @@
 import {
     GET_WISATA_DETAIL,
-    GET_WISATA_LIST
+    GET_WISATA_LIST,
+    PUT_WISATA_EDIT
 } from "../actions/wisataAction";
 
 let initialState = {
@@ -10,6 +11,8 @@ let initialState = {
     getWisataDetailResult: false,
     getWisataDetailError: false,
     getWisataDetailLoading: false,
+    getResponDataWisata: false,
+    errorResponDataWisata: false,
 }
 
 const Wisata = (state = initialState, action) => {
@@ -27,6 +30,13 @@ const Wisata = (state = initialState, action) => {
                 getWisataDetailResult: action.payload.data,
                 getWisataDetailError: action.payload.error,
                 getWisataDetailLoading: action.payload.loading
+            }
+
+        case PUT_WISATA_EDIT:
+            return {
+                ...state,
+                getResponDataWisata: action.payload.data,
+                errorResponDataWisata: action.payload.error,
             }
         default:
             return state;
