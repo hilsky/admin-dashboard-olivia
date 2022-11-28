@@ -21,3 +21,10 @@ export const CREATE_KULINER = "CREATE_KULINER";
 export const GET_KULINER = "DELETE_KULINER";
 export const UPDATE_KULINER = "UPDATE_KULINER";
 export const DELETE_KULINER = "DELETE_KULINER";
+
+//hotel
+
+export const CREATE_HOTEL = "CREATE_HOTEL";
+export const GET_HOTEL = "GET_HOTEL";
+export const UPDATE_HOTEL = "UPDATE_HOTEL";
+export const DELETE_HOTEL = "DELETE_HOTEL";
