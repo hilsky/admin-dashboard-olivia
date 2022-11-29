@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import styles from '../styles/user.module.css';
 import HiOutlinePencilSquare from 'react-icons/hi2'
@@ -40,7 +40,6 @@ const DashboardUser = () => {
         navigate(path)
     }
 
-
     return (
         <div className={styles.container}>
             <div className={styles.header1}>
@@ -50,12 +49,12 @@ const DashboardUser = () => {
                 <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahUser}>
                     Tambah
                 </Button>
-                <Button variant="primary" size="sm" active className={styles.btnExport}>
+                {/* <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as PDF
                 </Button>
                 <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as Excel
-                </Button>
+                </Button> */}
             </div>
             <Table striped bordered hover>
                 <thead className={styles.tableBody}>

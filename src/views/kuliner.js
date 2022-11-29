@@ -40,12 +40,12 @@ const Kuliner = () => {
                 <Button variant="primary" size="sm" active className={styles.btnExport}><Link to="/tambah-kuliner">
                     Tambah</Link>
                 </Button>
-                <Button variant="primary" size="sm" active className={styles.btnExport}>
+                {/* <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as PDF
                 </Button>
                 <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as Excel
-                </Button>
+                </Button> */}
             </div>
             <Table striped bordered hover>
                 <thead className={styles.tableBody}>
