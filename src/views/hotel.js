@@ -68,7 +68,7 @@ const Hotel = () => {
                                 <td>{index + 1}</td>
                                 <td>{e.namaHotel ? (e.namaHotel) : "-"}</td>
                                 <td>{e.alamat ? (e.alamat) : "-"}</td>
-                                <td>Tersedia</td>
+                                <td>{e.fasWifi !== "0" ? "Tersedia" : "Tidak Tersedia"}</td>
                                 <td>{e.fasParkir !== "0" ? "Tersedia" : "Tidak Tersedia"} </td>
                                 <td>{e.fasSarapan !== "0" ? "Tersedia" : "Tidak Tersedia"}</td>
                                 <td>4</td>

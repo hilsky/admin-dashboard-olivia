@@ -3,6 +3,7 @@ import axios from "axios";
 export const GET_HOTEL_LIST = "GET_HOTEL_LIST";
 export const GET_HOTEL_DETAIL = "GET_HOTEL_DETAIL";
 export const DELETE_HOTEL = "DELETE_HOTEL";
+export const PUT_HOTEL_EDIT = "PUT_HOTEL_EDIT"
 
 export const getHotelList = () => {
     return (dispatch) => {
@@ -67,6 +68,33 @@ export const deleteHotel = (id) => {
             })
             .catch((error) => {
                 console.log(error)
+            })
+    }
+}
+
+export const putHotelUpdate = (data, id) => {
+    return (dispatch) => {
+        axios
+            .put("https://desolate-crag-78080.herokuapp.com/hotel/" + id, data)
+            .then((response) => {
+                dispatch({
+                    type: PUT_HOTEL_EDIT,
+                    payload: {
+                        loading: true,
+                        data: response.data,
+                        errorMessage: false
+                    },
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    type: PUT_HOTEL_EDIT,
+                    payload: {
+                        loading: false,
+                        data: false,
+                        errorMessage: true
+                    },
+                });
             })
     }
 }

@@ -1,7 +1,8 @@
 import {
     GET_HOTEL_DETAIL,
     GET_HOTEL_LIST,
-    DELETE_HOTEL
+    DELETE_HOTEL,
+    PUT_HOTEL_EDIT
 } from "../actions/hotelAction";
 
 let initialState = {
@@ -14,6 +15,8 @@ let initialState = {
     deleteHotelResult: false,
     deleteHotelLoading: false,
     deleteHotelError: false,
+    getResponDataHotel: false,
+    getErrorDataHotel: false
 }
 
 const hotelReducer = (state = initialState, action) => {
@@ -31,6 +34,13 @@ const hotelReducer = (state = initialState, action) => {
                 getHotelDetailResult: action.payload.data,
                 getKulinerDetailLoading: action.payload.loading,
                 getKulinerDetailError: action.payload.errorMessage
+            }
+
+        case PUT_HOTEL_EDIT:
+            return {
+                ...state,
+                getResponDataHotel: action.payload.data,
+                getErrorDataHotel: action.payload.errorMessage
             }
         default:
             return state;

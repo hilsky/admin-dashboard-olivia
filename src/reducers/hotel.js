@@ -7,7 +7,7 @@ import {
 
 const initialState = [];
 
-function userReducer(hotel = initialState, action) {
+function hotel(hotel = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
@@ -29,7 +29,7 @@ function userReducer(hotel = initialState, action) {
                 }
             })
 
-        case DELETE_USER:
+        case DELETE_HOTEL:
             return hotel.filter(({ id }) => id !== payload.id);
 
         default:

@@ -1,6 +1,7 @@
 import {
     GET_KULINER_DETAIL,
-    GET_KULINER_LIST
+    GET_KULINER_LIST,
+    PUT_KULINER_EDIT
 } from "../actions/kulinerAction";
 
 let initialState = {
@@ -10,6 +11,8 @@ let initialState = {
     getKulinerDetailResult: false,
     getKulinerDetailError: false,
     getKulinerDetailLoading: false,
+    getResponDataKuliner: false,
+    getResponErrorKuliner: false
 }
 
 const kulinerReducer = (state = initialState, action) => {
@@ -28,6 +31,15 @@ const kulinerReducer = (state = initialState, action) => {
                 getKulinerDetailLoading: action.payload.loading,
                 getKulinerDetailError: action.payload.errorMessage
             }
+
+        case PUT_KULINER_EDIT:
+            return {
+                ...state,
+                getResponDataKuliner: action.payload.data,
+
+                getResponErrorKuliner: action.payload.errorMessage
+            }
+
         default:
             return state;
     }

@@ -7,7 +7,8 @@ import pemandu from './pemandu';
 import pemanduReducer from './pemanduReducer'
 import kulinerReducer from "./kulinerReducer";
 import hotelReducer from "./hotelReducer";
-import hotel from './hotel'
+import hotel from './hotel';
+import kuliner from "./kuliner";
 
 export default combineReducers({
     users,
@@ -17,6 +18,7 @@ export default combineReducers({
     pemandu,
     pemanduReducer,
     kulinerReducer,
+    kuliner,
     hotelReducer,
     hotel
 })
