@@ -7,9 +7,9 @@ import {
 
 import KulinerDataService from "../services/kuliner.service";
 
-export const createKuliner = (namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup) => async (dispatch) => {
+export const createKuliner = (namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup, imgBg) => async (dispatch) => {
     try {
-        const res = await KulinerDataService.createKuliner({ namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup });
+        const res = await KulinerDataService.createKuliner({ namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup, imgBg });
 
         dispatch({
             type: CREATE_KULINER,
@@ -65,7 +65,7 @@ export const updateKuliner = (id, data) => async (dispatch) => {
 
 export const deleteKuliner = (id) => async (dispatch) => {
     try {
-        await HotelDataService.deleteKuliner(id);
+        await KulinerDataService.deleteKuliner(id);
 
         dispatch({
             type: DELETE_KULINER,

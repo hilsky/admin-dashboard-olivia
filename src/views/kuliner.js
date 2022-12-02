@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import { Table, Button } from 'react-bootstrap';
 import styles from '../styles/user.module.css';
-import HiOutlinePencilSquare from 'react-icons/hi2'
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getKulinerList, deleteKuliner } from "../actions/kulinerAction";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 
 const Kuliner = () => {
 
     const dispatch = useDispatch();
+    const mySwal = withReactContent(Swal);
 
     const { getKulinerListResult, getKulinerLoading, getKulinerError } =
         useSelector((state) => state.kulinerReducer);
@@ -18,7 +20,7 @@ const Kuliner = () => {
     }, [dispatch])
 
     let navigate = useNavigate();
-    const tambahWisata = () => {
+    const tambahKuliner = () => {
         let path = '/tambah-kuliner'
         navigate(path)
     }
@@ -26,7 +28,34 @@ const Kuliner = () => {
     const deleteById = (id, e) => {
         e.preventDefault();
         console.log(e)
-        dispatch(deleteKuliner(id))
+        mySwal.fire({
+            title: "Konfirmasi?",
+            text: "Anda yakin akan menghapusnya",
+            icon: "warning",
+            dangerMode: true,
+            confirmButtonColor: '#3085d6',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus!',
+            cancelButtonText: 'Batal'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deleteKuliner(id))
+                    mySwal.fire({
+                        position: 'center',
+                        title: "Yeay",
+                        text: "Berhasil menghapus",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
+                }
+            })
 
     }
 
@@ -37,8 +66,8 @@ const Kuliner = () => {
                 <h1 className={styles.headerText}>Kuliner</h1>
             </div>
             <div className={styles.headerBody2}>
-                <Button variant="primary" size="sm" active className={styles.btnExport}><Link to="/tambah-kuliner">
-                    Tambah</Link>
+                <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahKuliner}>
+                    +
                 </Button>
                 {/* <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as PDF
@@ -47,8 +76,8 @@ const Kuliner = () => {
                     Export as Excel
                 </Button> */}
             </div>
-            <Table striped bordered hover>
-                <thead className={styles.tableBody}>
+            <Table responsive className={styles.bodyTable}>
+                <thead className={styles.theadBody}>
                     <tr>
                         <th>No</th>
                         <th>Nama Kuliner</th>
@@ -69,8 +98,8 @@ const Kuliner = () => {
                                 <td>{e.hariBuka ? (e.hariBuka) : null} - {e.hariTutup ? (e.hariTutup) : null}</td>
 
                                 <td className={styles.tdBtn}>
-                                    <Button variant="success" size="sm"><Link to={"/detail-kuliner/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
+                                    <Button variant="success" size="sm"><Link to={"/detail-kuliner/" + e._id} className={styles.linkTo}>Edit</Link></Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)} className={styles.linkTo}>Hapus</Button>
                                 </td>
                             </tr>
                         )

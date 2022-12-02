@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Router, matchPath } from 'react-router-dom';
 import DashboardUser from './views/dashboardUser';
 import Login from './views/login';
 import SideBar from './components/sidebar/SideBar'
@@ -20,13 +20,12 @@ import TambahPemandu from './views/tambahPemandu';
 
 
 
-function App() {
+function App(props) {
   return (
     <BrowserRouter>
       <SideBar />
       <Routes>
         <Route path='/' exact element={<DashboardUser />} />
-        <Route path='/login' exact element={<Login />} />
         <Route path='/hotel' exact element={<Hotel />} />
         <Route path='/wisata' exact element={<Wisata />} />
         <Route path='/pemandu' exact element={<Pemandu />} />

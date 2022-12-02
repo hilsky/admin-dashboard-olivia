@@ -4,6 +4,8 @@ import styles from '../styles/tambahkuliner.module.css'
 import { useDispatch } from 'react-redux';
 import { createPemandu } from '../actions/pemandu';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const TambahPemandu = () => {
 
@@ -22,6 +24,7 @@ const TambahPemandu = () => {
     const [validated, setValidated] = useState(false);
 
     const navigate = useNavigate();
+    const mySwal = withReactContent(Swal);
 
     const onChangeNama = (e) => {
         const name = e.target.value;
@@ -75,18 +78,25 @@ const TambahPemandu = () => {
         else {
             dispatch(createPemandu(nama, username, email, password, desc, rating))
                 .then(() => {
-                    setSuccessful(true)
+                    mySwal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        text: 'Berhasil ditambahkan',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
 
-                    setNama('');
-                    setPassword('');
-                    setEmail('');
-                    setDesc('');
-                    setUsername('');
-                    setRating('');
-                    navigate('/pemandu')
+                        navigate('/pemandu')
+                    })
                 })
                 .catch((err) => {
-                    setSuccessful(false)
+                    mySwal.fire({
+                        icon: 'error',
+                        title: 'Oops',
+                        text: 'Sepertinya ada yang salah, silahkan coba lagi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 })
         }
 
@@ -103,23 +113,17 @@ const TambahPemandu = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Nama Pemandu</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan nama pemandu' className={styles.bodyInput} value={nama} onChange={onChangeNama} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Username</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan username' className={styles.bodyInput} value={username} onChange={onChangeUsername} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" placeholder='Masukkan email' className={styles.bodyInput} value={email} onChange={onChangeEmail} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
@@ -128,16 +132,12 @@ const TambahPemandu = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Deskripsi</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan deskripsi' className={styles.bodyInput} value={desc} onChange={onChangeDesc} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Rating</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan rating' className={styles.bodyInput} value={rating} onChange={onChangeRating} />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text> */}
+
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Tambah

@@ -32,3 +32,15 @@
     border-left-width: 0 !important;
     border-right-width: 0 !important;
 }
+
+.formBody {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.spaceInput {
+    margin-left: 10px;
+    margin-right: 10px;
+}

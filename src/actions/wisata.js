@@ -7,9 +7,9 @@ import {
 
 import WisataDataService from "../services/wisata.service";
 
-export const createWisata = (namaWisata, alamat, deskripsi, rating) => async (dispatch) => {
+export const createWisata = (namaWisata, alamat, deskripsi, rating, imgBg) => async (dispatch) => {
     try {
-        const res = await WisataDataService.create({ namaWisata, alamat, deskripsi, rating });
+        const res = await WisataDataService.create({ namaWisata, alamat, deskripsi, rating, imgBg });
 
         dispatch({
             type: CREATE_WISATA,

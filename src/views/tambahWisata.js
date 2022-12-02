@@ -4,6 +4,8 @@ import styles from '../styles/tambahwisata.module.css'
 import { useDispatch } from 'react-redux';
 import { createWisata } from '../actions/wisata';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const TambahWisata = () => {
 
@@ -16,6 +18,7 @@ const TambahWisata = () => {
     const [validated, setValidated] = useState(false)
 
     const navigate = useNavigate();
+    const mySwal = withReactContent(Swal)
 
     const onChangeNamaWisata = (e) => {
         e.preventDefault();
@@ -61,16 +64,22 @@ const TambahWisata = () => {
         else {
             dispatch(createWisata(namaWisata, lokasi, desc, rating))
                 .then(() => {
-                    setSuccessful(true)
-
-                    setNamaWisata('');
-                    setLokasi('');
-                    setDesc('');
-                    setRating('');
-                    navigate('/wisata')
+                    mySwal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        text: 'Berhasil ditambahkan',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        navigate('/wisata')
+                    })
                 })
                 .catch((err) => {
-                    setSuccessful(false)
+                    mySwal.fire({
+                        icon: 'error',
+                        title: 'Oops',
+                        text: 'Sepertinya ada yang salah, silahkan coba lagi',
+                    })
                 })
         }
 

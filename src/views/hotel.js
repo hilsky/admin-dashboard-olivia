@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
 import { Table, Button } from 'react-bootstrap';
-import styles from '../styles/user.module.css';
-import HiOutlinePencilSquare from 'react-icons/hi2'
+import styles from '../styles/hotel.module.css';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHotelList, deleteHotel } from "../actions/hotelAction";
@@ -10,7 +11,7 @@ import { getHotelList, deleteHotel } from "../actions/hotelAction";
 const Hotel = () => {
 
     const dispatch = useDispatch();
-
+    const mySwal = withReactContent(Swal);
     const { getHotelListResult, getHotelLoading, getHotelError } =
         useSelector((state) => state.hotelReducer);
 
@@ -27,7 +28,34 @@ const Hotel = () => {
     const deleteById = (id, e) => {
         e.preventDefault();
         console.log(e)
-        dispatch(deleteHotel(id))
+        mySwal.fire({
+            title: "Konfirmasi?",
+            text: "Anda yakin akan menghapusnya",
+            icon: "warning",
+            dangerMode: true,
+            confirmButtonColor: '#3085d6',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus!',
+            cancelButtonText: 'Batal'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deleteHotel(id))
+                    mySwal.fire({
+                        position: 'center',
+                        title: "Yeay",
+                        text: "Berhasil menghapus",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
+                }
+            })
 
     }
 
@@ -39,7 +67,7 @@ const Hotel = () => {
             </div>
             <div className={styles.headerBody2}>
                 <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahHotel}>
-                    Tambah
+                    +
                 </Button>
                 {/* <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as PDF
@@ -48,8 +76,8 @@ const Hotel = () => {
                     Export as Excel
                 </Button> */}
             </div>
-            <Table striped bordered hover>
-                <thead className={styles.tableBody}>
+            <Table responsive className={styles.bodyTable}>
+                <thead className={styles.theadBody}>
                     <tr>
                         <th>No</th>
                         <th>Nama Hotel</th>
@@ -73,8 +101,8 @@ const Hotel = () => {
                                 <td>{e.fasSarapan !== "0" ? "Tersedia" : "Tidak Tersedia"}</td>
                                 <td>4</td>
                                 <td className={styles.tdBtn}>
-                                    <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
+                                    <Button variant="success" size="sm"><Link to={"/detail-hotel/" + e._id} className={styles.linkTo}>Edit</Link></Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)} className={styles.linkTo}>Hapus</Button>
                                 </td>
                             </tr>
                         )

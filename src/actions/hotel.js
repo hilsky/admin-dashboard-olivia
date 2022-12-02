@@ -7,9 +7,9 @@ import {
 
 import HotelDataService from "../services/hotel.service";
 
-export const createHotel = (namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating) => async (dispatch) => {
+export const createHotel = (namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating, imgHotel) => async (dispatch) => {
     try {
-        const res = await HotelDataService.createUser({ namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating });
+        const res = await HotelDataService.createHotel({ namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating, imgHotel });
 
         dispatch({
             type: CREATE_HOTEL,

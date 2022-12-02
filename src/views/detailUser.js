@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { putUserUpdate } from '../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import UserDataService from '../services/user.service';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 
 const DetailUser = () => {
@@ -38,6 +40,7 @@ const DetailUser = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const mySwal = withReactContent(Swal);
 
 
 
@@ -65,9 +68,36 @@ const DetailUser = () => {
 
 
     const updateData = () => {
-        dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat }, id))
-        console.log(currentUser)
-        navigate('/')
+        if (username.length < 4) {
+            setErrorUsername('Username diisi minimal 4 karakter')
+        } else if (password.length < 8) {
+            setErrorPassword('Password diisi minimal 8 karakter')
+        } else {
+            dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat }, id))
+                .then(() => {
+                    mySwal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        text: 'Berhasil diubah',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+
+                        navigate('/')
+                    })
+                })
+                .catch((err) => {
+                    mySwal.fire({
+                        icon: 'error',
+                        title: 'Oops',
+                        text: 'Sepertinya ada yang salah, silahkan coba lagi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+
+        }
+
     }
 
     const onChangeFullName = (e) => {
@@ -147,33 +177,33 @@ const DetailUser = () => {
                 (<Form onSubmit={updateData}>
                     <Form.Group className="mb-3" >
                         <Form.Label>Nama Lengkap</Form.Label>
-                        <Form.Control type="text" value={fullName} className={styles.bodyInput} onChange={onChangeFullName} />
+                        <Form.Control type="text" value={fullName} required className={styles.bodyInput} onChange={onChangeFullName} />
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" value={username} className={styles.bodyInput} onChange={onChangeUsername} />
+                        <Form.Control type="text" value={username} required className={styles.bodyInput} onChange={onChangeUsername} />
 
 
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={email} className={styles.bodyInput} onChange={onChangeEmail} />
+                        <Form.Control type="email" value={email} required className={styles.bodyInput} onChange={onChangeEmail} />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        ? <Form.Control type="password" value={password} className={styles.bodyInput} onChange={onChangePassword} />
+                        ? <Form.Control type="password" value={password} required className={styles.bodyInput} onChange={onChangePassword} />
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Nomor Whatsapp</Form.Label>
-                        <Form.Control type="number" value={noWa} className={styles.bodyInput} onChange={onChangeNoWa} />
+                        <Form.Control type="number" value={noWa} required className={styles.bodyInput} onChange={onChangeNoWa} />
 
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Alamat</Form.Label>
-                        <Form.Control type="text" value={alamat} className={styles.bodyInput} onChange={onChangeAlamat} />
+                        <Form.Control type="text" value={alamat} required className={styles.bodyInput} onChange={onChangeAlamat} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit">

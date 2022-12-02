@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button } from 'react-bootstrap';
-import styles from '../styles/user.module.css';
+import styles from '../styles/pemandu.module.css';
 import HiOutlinePencilSquare from 'react-icons/hi2'
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPemanduList, deletePemandu } from "../actions/pemanduAction";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 
 const Pemandu = () => {
 
     const dispatch = useDispatch();
+    const mySwal = withReactContent(Swal)
 
     const { getPemanduListResult, getPemanduLoading, getPemanduError } =
         useSelector((state) => state.pemanduReducer);
@@ -27,7 +30,34 @@ const Pemandu = () => {
     const deleteById = (id, e) => {
         e.preventDefault();
         console.log(e)
-        dispatch(deletePemandu(id))
+        mySwal.fire({
+            title: "Konfirmasi?",
+            text: "Anda yakin akan menghapusnya",
+            icon: "warning",
+            dangerMode: true,
+            confirmButtonColor: '#3085d6',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus!',
+            cancelButtonText: 'Batal'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deletePemandu(id))
+                    mySwal.fire({
+                        position: 'center',
+                        title: "Yeay",
+                        text: "Berhasil menghapus",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
+                }
+            })
 
     }
 
@@ -38,7 +68,7 @@ const Pemandu = () => {
             </div>
             <div className={styles.headerBody2}>
                 <Button variant="primary" size="sm" active className={styles.btnExport} onClick={tambahPemandu}>
-                    Tambah
+                    +
                 </Button>
                 {/* <Button variant="primary" size="sm" active className={styles.btnExport}>
                     Export as PDF
@@ -47,14 +77,13 @@ const Pemandu = () => {
                     Export as Excel
                 </Button> */}
             </div>
-            <Table striped bordered hover>
-                <thead className={styles.tableBody}>
+            <Table responsive className={styles.bodyTable}>
+                <thead className={styles.theadBody}>
                     <tr>
                         <th>No</th>
                         <th>Nama Pemandu</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Deskripsi</th>
                         <th>Rating</th>
                         <th>Aksi</th>
@@ -68,13 +97,12 @@ const Pemandu = () => {
                                 <td>{e.nama ? (e.nama) : "-"}</td>
                                 <td>{e.username ? (e.username) : "-"}</td>
                                 <td>{e.email ? (e.email) : "-"}</td>
-                                <td>{e.password ? (e.password) : "-"}</td>
                                 <td>{e.desc ? (e.desc) : "-"}</td>
                                 <td>{e.rating ? (e.rating) : "-"}</td>
 
                                 <td className={styles.tdBtn}>
-                                    <Button variant="success" size="sm"><Link to={"/detail-pemandu/" + e._id}>Edit</Link></Button>
-                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)}>Hapus</Button>
+                                    <Button variant="success" size="sm"><Link to={"/detail-pemandu/" + e._id} className={styles.linkTo}>Edit</Link></Button>
+                                    <Button variant="danger" size="sm" onClick={(x) => deleteById(e._id, x)} className={styles.linkTo}>Hapus</Button>
                                 </td>
                             </tr>
                         )
