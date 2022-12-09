@@ -15,9 +15,6 @@ import { getUserList, deleteUser } from "../actions/userAction";
 
 const DashboardUser = () => {
 
-    const [currentUser, setCurrentUSer] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
-
     const dispatch = useDispatch();
     const mySwal = withReactContent(Swal);
 

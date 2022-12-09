@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../url";
 
 export const GET_PEMANDU_LIST = "GET_PEMANDU_LIST";
 export const GET_PEMANDU_DETAIL = "GET_PEMANDU_DETAIL";
@@ -8,7 +9,7 @@ export const PUT_PEMANDU_EDIT = "PUT_PEMANDU_EDIT"
 export const getPemanduList = () => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/guide")
+            .get(API_URL + "guide")
             .then((response) => {
                 dispatch({
                     type: GET_PEMANDU_LIST,
@@ -35,7 +36,7 @@ export const getPemanduList = () => {
 export const getPemanduDetail = (id) => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/guide/" + id)
+            .get(API_URL + `guide/${id}`)
             .then((response) => {
                 dispatch({
                     type: GET_PEMANDU_DETAIL,
@@ -62,7 +63,7 @@ export const getPemanduDetail = (id) => {
 export const deletePemandu = (id) => {
     return (dispatch) => {
         axios
-            .delete("https://desolate-crag-78080.herokuapp.com/guide/" + id)
+            .delete(API_URL + `guide/${id}`)
             .then((response) => {
                 console.log(response)
             })
@@ -75,7 +76,7 @@ export const deletePemandu = (id) => {
 export const putPemanduUpdate = (data, id) => {
     return (dispatch) => {
         axios
-            .put("https://desolate-crag-78080.herokuapp.com/guide/" + id, data)
+            .put(API_URL + `guide/${id}`, data)
             .then((response) => {
                 dispatch({
                     type: PUT_PEMANDU_EDIT,

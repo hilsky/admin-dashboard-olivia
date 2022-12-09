@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import styles from '../styles/detailuser.module.css'
+import styles from '../styles/detailwisata.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import WisataDataService from '../services/wisata.service';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ const DetailWisata = () => {
     const [lokasi, setLokasi] = useState('');
     const [desc, setDesc] = useState('');
     const [rating, setRating] = useState('');
-
+    const [imageBg, setImageBg] = useState('');
     const [currentWisata, setCurrentWisata] = useState(initialWisataState)
 
     const { id } = useParams();
@@ -36,6 +36,7 @@ const DetailWisata = () => {
                 setLokasi(response.data.lokasi)
                 setDesc(response.data.desc)
                 setRating(response.data.rating)
+                setImageBg(response.data.imageBg)
                 console.log(response.data);
             })
             .catch(e => {
@@ -75,8 +76,15 @@ const DetailWisata = () => {
 
     };
 
+    const onChangeImg = (e) => {
+        e.preventDefault();
+        const val = e.target.value
+        setImageBg(val);
+
+    };
+
     const updateData = () => {
-        dispatch(updateWisata({ namaWisata, lokasi, desc, rating }, id))
+        dispatch(updateWisata({ namaWisata, lokasi, desc, rating, imageBg }, id))
         console.log(currentWisata)
         navigate('/wisata')
     }
@@ -88,6 +96,10 @@ const DetailWisata = () => {
             </div>
             {currentWisata ?
                 (<Form onSubmit={updateData}>
+                    {imageBg ?
+                        (<div className={styles.imgBody}>
+                            <img src={imageBg} className={styles.img} />
+                        </div>) : null}
                     <Form.Group className="mb-3" >
                         <Form.Label>Nama Wisata</Form.Label>
                         <Form.Control type="text" value={namaWisata} className={styles.bodyInput} onChange={onChangeNamaWisata} />
@@ -104,6 +116,10 @@ const DetailWisata = () => {
                     <Form.Group className="mb-3">
                         <Form.Label>Rating</Form.Label>
                         <Form.Control type="text" value={rating} className={styles.bodyInput} onChange={onChangeRating} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>URL Gambar</Form.Label>
+                        <Form.Control type="text" value={imageBg} className={styles.bodyInput} onChange={onChangeImg} />
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Ubah

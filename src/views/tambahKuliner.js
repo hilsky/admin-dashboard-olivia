@@ -15,6 +15,7 @@ const TambahKuliner = () => {
     const [jamTutup, setJamTutup] = useState('');
     const [hariBuka, setHariBuka] = useState('');
     const [hariTutup, setHariTutup] = useState('');
+    const [imgBg, setImgBg] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,6 +57,12 @@ const TambahKuliner = () => {
         setHariTutup(val)
     }
 
+    const onChangeImgBg = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setImgBg(val)
+    }
+
     const TambahData = (e) => {
         e.preventDefault();
 
@@ -70,7 +77,7 @@ const TambahKuliner = () => {
             return null
         }
         else {
-            dispatch(createKuliner(namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup))
+            dispatch(createKuliner(namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup, imgBg))
                 .then(() => {
                     mySwal.fire({
                         title: 'Berhasil',
@@ -127,6 +134,11 @@ const TambahKuliner = () => {
                         <div className={styles.spaceInput}>-</div>
                         <Form.Control type="text" className={styles.bodyInput} value={hariTutup} onChange={onChangeHariTutup} />
                     </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>URL Gambar</Form.Label>
+                    <Form.Control type="text" placeholder='Masukkan alamat' className={styles.bodyInput} value={imgBg} onChange={onChangeImgBg} />
+
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Tambah

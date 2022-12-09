@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../url";
 
 export const GET_KULINER_LIST = "GET_KULINER_LIST";
 export const GET_KULINER_DETAIL = "GET_KULINER_DETAIL";
@@ -8,7 +9,7 @@ export const PUT_KULINER_EDIT = "PUT_KULINER_EDIT";
 export const getKulinerList = () => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/kuliner")
+            .get(API_URL + "kuliner")
             .then((response) => {
                 dispatch({
                     type: GET_KULINER_LIST,
@@ -35,7 +36,7 @@ export const getKulinerList = () => {
 export const getKulinerDetail = (id) => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/kuliner/" + id)
+            .get(API_URL + `kuliner/${id}`)
             .then((response) => {
                 dispatch({
                     type: GET_KULINER_DETAIL,
@@ -62,7 +63,7 @@ export const getKulinerDetail = (id) => {
 export const deleteKuliner = (id) => {
     return (dispatch) => {
         axios
-            .delete("https://desolate-crag-78080.herokuapp.com/kuliner/" + id)
+            .delete(API_URL + `hotel/${id}`)
             .then((response) => {
                 console.log(response)
             })
@@ -75,7 +76,7 @@ export const deleteKuliner = (id) => {
 export const updateKuliner = (data, id) => {
     return (dispatch) => {
         axios
-            .put("https://desolate-crag-78080.herokuapp.com/kuliner/" + id, data)
+            .put(API_URL + `kuliner/${id}`, data)
             .then((response) => {
                 dispatch({
                     type: PUT_KULINER_EDIT,

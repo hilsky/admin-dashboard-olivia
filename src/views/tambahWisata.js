@@ -14,6 +14,7 @@ const TambahWisata = () => {
     const [lokasi, setLokasi] = useState('');
     const [desc, setDesc] = useState('');
     const [rating, setRating] = useState('');
+    const [imgBg, setImgBg] = useState('');
     const [successful, setSuccessful] = useState(false)
     const [validated, setValidated] = useState(false)
 
@@ -44,6 +45,12 @@ const TambahWisata = () => {
         setRating(rating);
     }
 
+    const onChangeImg = (e) => {
+        e.preventDefault();
+        const img = e.target.value;
+        setImgBg(img);
+    }
+
     const dispatch = useDispatch();
 
 
@@ -62,7 +69,7 @@ const TambahWisata = () => {
             setSuccessful(false);
         }
         else {
-            dispatch(createWisata(namaWisata, lokasi, desc, rating))
+            dispatch(createWisata(namaWisata, lokasi, desc, rating, imgBg))
                 .then(() => {
                     mySwal.fire({
                         title: 'Berhasil',
@@ -114,6 +121,10 @@ const TambahWisata = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Rating</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan rating' className={styles.bodyInput} onChange={onChangeRating} value={rating} />
+                </Form.Group>
+                <Form.Group className="mb-3" >
+                    <Form.Label>URL Gambar</Form.Label>
+                    <Form.Control type="text" placeholder='Masukkan URL Gambar' className={styles.bodyInput} onChange={onChangeImg} value={imgBg} />
                 </Form.Group>
 
                 <Button variant="primary" type="submit">

@@ -15,6 +15,7 @@ const TambahPemandu = () => {
     const [password, setPassword] = useState('');
     const [desc, setDesc] = useState('');
     const [rating, setRating] = useState('')
+    const [imgProfil, setImgProfil] = useState('');
     const [successful, setSuccessful] = useState(false);
     const [errorName, setErrorName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -27,33 +28,45 @@ const TambahPemandu = () => {
     const mySwal = withReactContent(Swal);
 
     const onChangeNama = (e) => {
+        e.preventDefault();
         const name = e.target.value;
         setNama(name);
     }
 
     const onChangeEmail = (e) => {
+        e.preventDefault();
         const email = e.target.value;
         setEmail(email);
     }
 
     const onChangePassword = (e) => {
+        e.preventDefault();
         const password = e.target.value;
         setPassword(password);
     }
 
     const onChangeDesc = (e) => {
+        e.preventDefault();
         const desc = e.target.value;
         setDesc(desc);
     }
 
     const onChangeRating = (e) => {
+        e.preventDefault();
         const rating = e.target.value;
         setRating(rating);
     }
 
     const onChangeUsername = (e) => {
+        e.preventDefault();
         const username = e.target.value;
         setUsername(username);
+    }
+
+    const onChangeImgProfil = (e) => {
+        e.preventDefault();
+        const imgProfil = e.target.value;
+        setImgProfil(imgProfil);
     }
 
 
@@ -76,7 +89,7 @@ const TambahPemandu = () => {
             setErrorPassword('Wajib diisi');
         }
         else {
-            dispatch(createPemandu(nama, username, email, password, desc, rating))
+            dispatch(createPemandu(nama, username, email, password, desc, rating, imgProfil))
                 .then(() => {
                     mySwal.fire({
                         title: 'Berhasil',
@@ -137,6 +150,11 @@ const TambahPemandu = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Rating</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan rating' className={styles.bodyInput} value={rating} onChange={onChangeRating} />
+
+                </Form.Group>
+                <Form.Group className="mb-3" >
+                    <Form.Label>URL Foto Profil</Form.Label>
+                    <Form.Control type="text" placeholder='Masukkan URL Foto Profil' className={styles.bodyInput} value={imgProfil} onChange={onChangeImgProfil} />
 
                 </Form.Group>
                 <Button variant="primary" type="submit">

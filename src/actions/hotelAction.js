@@ -1,14 +1,17 @@
 import axios from "axios";
+import { API_URL } from "../url";
 
 export const GET_HOTEL_LIST = "GET_HOTEL_LIST";
 export const GET_HOTEL_DETAIL = "GET_HOTEL_DETAIL";
 export const DELETE_HOTEL = "DELETE_HOTEL";
 export const PUT_HOTEL_EDIT = "PUT_HOTEL_EDIT"
 
+
+
 export const getHotelList = () => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/hotel")
+            .get(API_URL + "hotel")
             .then((response) => {
                 dispatch({
                     type: GET_HOTEL_LIST,
@@ -35,7 +38,7 @@ export const getHotelList = () => {
 export const getHotelDetail = (id) => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/hotel/" + id)
+            .get(API_URL + `hotel/${id}`)
             .then((response) => {
                 dispatch({
                     type: GET_HOTEL_DETAIL,
@@ -62,7 +65,7 @@ export const getHotelDetail = (id) => {
 export const deleteHotel = (id) => {
     return (dispatch) => {
         axios
-            .delete("https://desolate-crag-78080.herokuapp.com/hotel/" + id)
+            .delete(API_URL + `hotel/${id}`)
             .then((response) => {
                 console.log(response)
             })
@@ -75,7 +78,7 @@ export const deleteHotel = (id) => {
 export const putHotelUpdate = (data, id) => {
     return (dispatch) => {
         axios
-            .put("https://desolate-crag-78080.herokuapp.com/hotel/" + id, data)
+            .put(API_URL + `hotel/${id}`, data)
             .then((response) => {
                 dispatch({
                     type: PUT_HOTEL_EDIT,

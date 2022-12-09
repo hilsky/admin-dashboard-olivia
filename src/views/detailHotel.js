@@ -15,6 +15,7 @@ const DetailHotel = () => {
     const [fasParkir, setFasParkir] = useState('');
     const [fasSarapan, setFasSarapan] = useState('');
     const [rating, setRating] = useState('');
+    const [imgHotel, setImgHotel] = useState('');
     const [currentHotel, setCurrentHotel] = useState();
 
 
@@ -33,6 +34,7 @@ const DetailHotel = () => {
                 setFasParkir(response.data.fasParkir)
                 setFasSarapan(response.data.fasSarapan)
                 setRating(response.data.rating)
+                setImgHotel(response.data.imgHotel)
 
             })
             .catch(e => {
@@ -80,8 +82,14 @@ const DetailHotel = () => {
         setRating(val)
     }
 
+    const onChangeImg = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setImgHotel(val)
+    }
+
     const updateData = () => {
-        dispatch(putHotelUpdate({ namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating }, id))
+        dispatch(putHotelUpdate({ namaHotel, alamat, fasWifi, fasParkir, fasSarapan, rating, imgHotel }, id))
         console.log(currentHotel)
         navigate('/hotel')
     }
@@ -92,6 +100,10 @@ const DetailHotel = () => {
                 <h1 className={styles.headerText}>Ubah Hotel</h1>
             </div>
             <Form onSubmit={updateData}>
+                {imgHotel ?
+                    (<div className={styles.imgBody}>
+                        <img src={imgHotel} className={styles.img} />
+                    </div>) : null}
                 <Form.Group className="mb-3" >
                     <Form.Label>Nama Hotel</Form.Label>
                     <Form.Control type="text" value={namaHotel} className={styles.bodyInput} onChange={onChangeNamaHotel} />
@@ -126,6 +138,11 @@ const DetailHotel = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Rating</Form.Label>
                     <Form.Control type="text" value={rating} className={styles.bodyInput} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>URL Gambar </Form.Label>
+                    <Form.Control type="text" value={imgHotel} className={styles.bodyInput} onChange={onChangeImg} />
+
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Ubah

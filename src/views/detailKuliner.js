@@ -14,6 +14,7 @@ const DetailKuliner = () => {
     const [jamTutup, setJamTutup] = useState('');
     const [hariBuka, setHariBuka] = useState('');
     const [hariTutup, setHariTutup] = useState('');
+    const [imgBg, setImgBg] = useState('')
 
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const DetailKuliner = () => {
                 setJamTutup(response.data.jamTutup)
                 setHariBuka(response.data.hariBuka)
                 setHariTutup(response.data.hariTutup)
+                setImgBg(response.data.imgBg)
 
             })
             .catch(e => {
@@ -79,8 +81,14 @@ const DetailKuliner = () => {
         setHariTutup(val)
     }
 
+    const onChangeImg = (e) => {
+        e.preventDefault();
+        const val = e.target.value;
+        setImgBg(val)
+    }
+
     const updateData = () => {
-        dispatch(updateKuliner({ namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup }, id))
+        dispatch(updateKuliner({ namaKuliner, alamat, jamBuka, jamTutup, hariBuka, hariTutup, imgBg }, id))
 
         navigate('/kuliner')
     }
@@ -102,6 +110,10 @@ const DetailKuliner = () => {
             </div>
 
             <Form onSubmit={updateData}>
+                {imgBg ?
+                    (<div className={styles.imgBody}>
+                        <img src={imgBg} className={styles.img} />
+                    </div>) : null}
                 <Form.Group className="mb-3" >
                     <Form.Label>Nama Kuliner</Form.Label>
 
@@ -111,7 +123,7 @@ const DetailKuliner = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Alamat</Form.Label>
-                    <Form.Control type="text" value="Kuta" className={styles.bodyInput} onChange={onChangeAlamat} />
+                    <Form.Control type="text" value={alamat} className={styles.bodyInput} onChange={onChangeAlamat} />
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Jam buka - Jam tutup</Form.Label>
@@ -141,7 +153,10 @@ const DetailKuliner = () => {
                         <Form.Control type="text" className={styles.bodyInput} value={hariTutup} onChange={onChangeHariTutup} />
                     </div>
                 </Form.Group>
-
+                <Form.Group className="mb-3" >
+                    <Form.Label>URL Gambar</Form.Label>
+                    <Form.Control type="text" value={imgBg} className={styles.bodyInput} onChange={onChangeImg} />
+                </Form.Group>
                 <Button variant="primary" type="submit">
                     Ubah
                 </Button>

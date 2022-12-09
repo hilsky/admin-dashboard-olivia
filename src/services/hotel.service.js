@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "https://desolate-crag-78080.herokuapp.com/";
+import { API_URL } from '../url';
 
 
 const getAll = () => {

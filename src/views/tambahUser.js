@@ -13,6 +13,7 @@ const TambahUser = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [imgProfil, setImgProfil] = useState('');
     const [successful, setSuccessful] = useState(false);
     const [errorFullName, setErrorFullName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -43,6 +44,11 @@ const TambahUser = () => {
         setPassword(password);
     }
 
+    const onChangeImgProfil = (e) => {
+        const imgProfil = e.target.value;
+        setImgProfil(imgProfil);
+    }
+
     const dispatch = useDispatch();
 
     const handleRegister = (e) => {
@@ -71,7 +77,7 @@ const TambahUser = () => {
             setErrorUsername('Username harus diisi minimal 4 karakter')
         }
         else {
-            dispatch(createUser(fullName, username, email, password))
+            dispatch(createUser(fullName, username, email, password, imgProfil))
                 .then(() => {
                     mySwal.fire({
                         title: 'Berhasil',
@@ -114,18 +120,7 @@ const TambahUser = () => {
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                     <Form.Label>Username</Form.Label>
-                    <InputGroup hasValidation className={styles.usernameBody}>
-                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                        <Form.Control
-                            type="text"
-                            placeholder="Username"
-                            aria-describedby="inputGroupPrepend"
-                            required
-                            className={styles.bodyInput}
-                            onChange={onChangeUsername}
-                            value={username}
-                        />
-                    </InputGroup>
+                    <Form.Control required type="text" placeholder='Masukkan username' className={styles.bodyInput} value={username} onChange={onChangeUsername} />
                     {errorUsername ? (
                         <Alert variant='danger' className={styles.alertBody}>{errorUsername}</Alert>
                     ) : null}
@@ -152,6 +147,10 @@ const TambahUser = () => {
                     <Form.Label>Alamat</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan alamat' className={styles.bodyInput} />
                 </Form.Group> */}
+                <Form.Group className="mb-3">
+                    <Form.Label >URL Foto Profil</Form.Label>
+                    <Form.Control required type="text" placeholder='Masukkan URL Foto Profil' className={styles.bodyInput} value={imgProfil} onChange={onChangeImgProfil} />
+                </Form.Group>
                 <Button variant="primary" type="submit" >
                     Tambah
                 </Button>

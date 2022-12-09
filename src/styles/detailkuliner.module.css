@@ -44,3 +44,27 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.imgBody {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+    .bodyInput {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .bodyInput {
+        width: 90% !important;
+    }
+}

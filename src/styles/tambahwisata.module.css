@@ -32,3 +32,15 @@
     border-left-width: 0 !important;
     border-right-width: 0 !important;
 }
+
+@media (max-width: 900px) {
+    .bodyInput {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .bodyInput {
+        width: 90% !important;
+    }
+}

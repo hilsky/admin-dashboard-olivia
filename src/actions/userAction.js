@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../url";
 
 export const GET_USER_LIST = "GET_USER_LIST";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
@@ -8,7 +9,7 @@ export const PUT_USER_EDIT = "PUT_USER_EDIT"
 export const getUserList = () => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/users")
+            .get(API_URL + "users")
             .then((response) => {
                 dispatch({
                     type: GET_USER_LIST,
@@ -35,7 +36,7 @@ export const getUserList = () => {
 export const getUserDetail = (id) => {
     return (dispatch) => {
         axios
-            .get("https://desolate-crag-78080.herokuapp.com/users/" + id)
+            .get(API_URL + `users/${id}`)
             .then((response) => {
                 dispatch({
                     type: GET_USER_DETAIL,
@@ -62,7 +63,7 @@ export const getUserDetail = (id) => {
 export const deleteUser = (id) => {
     return (dispatch) => {
         axios
-            .delete("https://desolate-crag-78080.herokuapp.com/users/" + id)
+            .delete(API_URL + `users/${id}`)
             .then((response) => {
                 console.log(response)
             })
@@ -76,7 +77,7 @@ export const deleteUser = (id) => {
 export const putUserUpdate = (data, id) => {
     return (dispatch) => {
         axios
-            .put("https://desolate-crag-78080.herokuapp.com/users/" + id, data)
+            .put(API_URL + `users/${id}`, data)
             .then((response) => {
                 dispatch({
                     type: PUT_USER_EDIT,

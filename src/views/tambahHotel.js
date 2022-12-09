@@ -16,7 +16,7 @@ const TambahHotel = () => {
     const [fasParkir, setFasParkir] = useState('1');
     const [fasSarapan, setFasSarapan] = useState('1');
     const [rating, setRating] = useState('');
-    const [imgHotel, setImgHotel] = useState('');
+    const [imgHotel, setImgHotel] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null)
     const [successful, setSuccessful] = useState(false);
     const [handleResponse, setHandleResponse] = useState(null);
@@ -66,9 +66,8 @@ const TambahHotel = () => {
     const onChangeImgBg = (e) => {
 
         e.preventDefault();
-        console.log(e)
-        const img = e.target.files[0];
-        setImgHotel(img)
+        const val = e.target.value;
+        setImgHotel(val)
 
     }
 
@@ -159,9 +158,10 @@ const TambahHotel = () => {
                     <Form.Label>Rating</Form.Label>
                     <Form.Control type="text" placeholder='Masukkan Rating' className={styles.bodyInput} onChange={onChangeRating} value={rating} />
                 </Form.Group>
-                <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Tambahkan gambar</Form.Label>
-                    <Form.Control type="file" name="image" className={styles.bodyInput} onChange={onChangeImgBg} />
+                <Form.Group className="mb-3" >
+                    <Form.Label>URL Gambar</Form.Label>
+                    <Form.Control type="text" placeholder='Masukkan URL Gambar' className={styles.bodyInput} value={imgHotel} onChange={onChangeImgBg} />
+
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Tambah

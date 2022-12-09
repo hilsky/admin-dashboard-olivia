@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Image } from 'react-bootstrap';
 import styles from '../styles/detailuser.module.css'
 import { useParams } from 'react-router-dom';
 import { putUserUpdate } from '../actions/userAction';
@@ -27,6 +27,7 @@ const DetailUser = () => {
     const [username, setUsername] = useState('');
     const [noWa, setNoWa] = useState('');
     const [alamat, setAlamat] = useState('');
+    const [imgProfil, setImgProfil] = useState('');
     const [successful, setSuccessful] = useState(false);
     const [errorFullName, setErrorFullName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -54,6 +55,7 @@ const DetailUser = () => {
                 setPassword(response.data.password)
                 setNoWa(response.data.noWa)
                 setAlamat(response.data.alamat)
+                setImgProfil(response.data.imgProfil)
             })
             .catch(e => {
                 console.log(e);
@@ -68,35 +70,8 @@ const DetailUser = () => {
 
 
     const updateData = () => {
-        if (username.length < 4) {
-            setErrorUsername('Username diisi minimal 4 karakter')
-        } else if (password.length < 8) {
-            setErrorPassword('Password diisi minimal 8 karakter')
-        } else {
-            dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat }, id))
-                .then(() => {
-                    mySwal.fire({
-                        title: 'Berhasil',
-                        icon: 'success',
-                        text: 'Berhasil diubah',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
-
-                        navigate('/')
-                    })
-                })
-                .catch((err) => {
-                    mySwal.fire({
-                        icon: 'error',
-                        title: 'Oops',
-                        text: 'Sepertinya ada yang salah, silahkan coba lagi',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                })
-
-        }
+        dispatch(putUserUpdate({ fullName, email, password, username, noWa, alamat, imgProfil }, id))
+        navigate('/')
 
     }
 
@@ -137,6 +112,13 @@ const DetailUser = () => {
         setNoWa(noWa);
     }
 
+    const onChangeImg = (e) => {
+        e.preventDefault()
+        const img = e.target.value;
+        setImgProfil(img);
+    }
+
+
     // const handleUpdate = (e) => {
     //     e.preventDefault();
     //     setSuccessful(false);
@@ -175,6 +157,10 @@ const DetailUser = () => {
             </div>
             {currentUser ?
                 (<Form onSubmit={updateData}>
+                    {imgProfil ?
+                        (<div className={styles.imgBody}>
+                            <img src={imgProfil} className={styles.img} />
+                        </div>) : null}
                     <Form.Group className="mb-3" >
                         <Form.Label>Nama Lengkap</Form.Label>
                         <Form.Control type="text" value={fullName} required className={styles.bodyInput} onChange={onChangeFullName} />
@@ -198,12 +184,17 @@ const DetailUser = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Nomor Whatsapp</Form.Label>
-                        <Form.Control type="number" value={noWa} required className={styles.bodyInput} onChange={onChangeNoWa} />
+                        <Form.Control type="number" value={noWa} className={styles.bodyInput} onChange={onChangeNoWa} />
 
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Alamat</Form.Label>
-                        <Form.Control type="text" value={alamat} required className={styles.bodyInput} onChange={onChangeAlamat} />
+                        <Form.Control type="text" value={alamat} className={styles.bodyInput} onChange={onChangeAlamat} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" >
+                        <Form.Label>URL Foto Profil</Form.Label>
+                        <Form.Control type="text" value={imgProfil} className={styles.bodyInput} onChange={onChangeImg} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
